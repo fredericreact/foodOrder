@@ -1,6 +1,6 @@
 # Context
  
-Provide it
+## Provide it
  
  
 ```javascript
@@ -73,7 +73,7 @@ function App() {
 export default App;
 ```
  
-Use it
+## Use it
  
 ```javascript
 import {useContext} from 'react';
@@ -103,7 +103,7 @@ return (
 export default HeaderCartButton
 ```
  
-useReducer
+# useReducer
  
 ```javascript
 import {useReducer} from 'react';
