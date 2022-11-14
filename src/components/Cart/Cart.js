@@ -36,6 +36,7 @@ await fetch('https://react-http-26861-default-rtdb.firebaseio.com/orders.json',
 })
 setIsSubmitting(false)
 setDidSubmit(true)
+cartCtx.clearCart()
 }
 
     const cartItems = <ul className={classes['cart-items']}> 
