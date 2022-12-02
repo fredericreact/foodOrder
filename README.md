@@ -152,3 +152,152 @@ return <CartContext.Provider value={cartContext}>
  
 export default CartProvider;
 ```
+
+
+# Add data to firebase
+
+ ![image](https://user-images.githubusercontent.com/104289891/205251162-eb3a1d1f-8d49-4081-b2c8-f030e85a24ab.png)
+
+
+Function in useeffect should not return a promise
+
+Async function alwars return a promise
+
+
+# useRef()
+
+Get the value of input after it’s submitted
+
+
+```javascript
+import classes from './Checkout.module.css';
+import {useRef} from 'react'
+ 
+const Checkout = (props) => {
+ 
+    const nameInputRef = useRef();
+    const streetInputRef = useRef();
+    const postalCodeInputRef = useRef();
+    const cityInputRef = useRef();
+ 
+  const confirmHandler = (event) => {
+    event.preventDefault();
+ 
+    const enteredName = nameInputRef.current.value
+    const enteredStreet = streetInputRef.current.value
+    const enteredPostalCode = postalCodeInputRef.current.value
+    const enteredCity = cityInputRef.current.value
+  };
+ 
+  return (
+    <form className={classes.form} onSubmit={confirmHandler}>
+      <div className={classes.control}>
+        <label htmlFor='name'>Your Name</label>
+        <input type='text' id='name' ref={nameInputRef}/>
+      </div>
+      <div className={classes.control}>
+        <label htmlFor='street'>Street</label>
+        <input type='text' id='street' ref={streetInputRef}/>
+      </div>
+      <div className={classes.control}>
+        <label htmlFor='postal'>Postal Code</label>
+        <input type='text' id='postal' ref={postalCodeInputRef}/>
+      </div>
+      <div className={classes.control}>
+        <label htmlFor='city'>City</label>
+        <input type='text' id='city' ref={cityInputRef}/>
+      </div>
+      <div className={classes.actions}>
+        <button type='button' onClick={props.onCancel}>
+          Cancel
+        </button>
+        <button className={classes.submit}>Confirm</button>
+      </div>
+    </form>
+  );
+};
+ 
+export default Checkout;
+```
+
+# useContext()
+
+https://github.com/fredericreact/foodorder/commit/06c3046e593c473c30f7d8cefda04b6f2a2d4bcc 
+
+
+```javascript
+import React from 'react';
+ 
+const CartContext = React.createContext({
+    
+    clearCart: ()=>{},
+})
+ 
+export default CartContext;
+```
+
+```javascript
+import {useReducer} from 'react';
+import CartContext from './cart-context';
+ 
+const defaultCartState = {
+    items : [],
+    totalAmount:0
+}
+ 
+const cartReducer = (state, action) => {
+    
+if (action.type ==='CLEAR') {
+    return defaultCartState
+}
+ 
+    return defaultCartState;
+}
+ 
+const CartProvider = (props) => {
+ 
+    const clearCartHandler = () => {
+        dispatchCartAction ({type: 'CLEAR'})
+    }
+ 
+    const cartContext = {
+   
+        clearCart: clearCartHandler
+    }
+ 
+return <CartContext.Provider value={cartContext}>
+    {props.children}
+</CartContext.Provider>
+}
+ 
+export default CartProvider;
+```
+
+```javascript
+import React, {useContext, useState} from 'react'
+import classes from './Cart.module.css'
+import Modal from '../UI/Modal'
+import CartContext from '../../store/cart-context'
+import CartItem from './CartItem';
+import Checkout from './Checkout'
+ 
+const Cart = (props) =>{
+ 
+const cartCtx=useContext(CartContext)
+ 
+const submitOrderHandler = async (userData) => {
+cartCtx.clearCart()
+}
+ 
+return (
+    <Modal onClose={props.onClose}>
+      {!isSubmitting && !didSubmit && cartModalContent}
+      {isSubmitting && isSubmittingModalContent}
+      {!isSubmitting && didSubmit && didSubmitModalContent}
+        </Modal>
+)
+}
+ 
+export default Cart;
+
+```
